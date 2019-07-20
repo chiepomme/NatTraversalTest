@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="NatTraversalTest.MainModule.Views.Main"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:NatTraversalTest.MainModule.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:vm="clr-namespace:NatTraversalTest.MainModule.ViewModels"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="640" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance vm:MainViewModel, IsDesignTimeCreatable=True}"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <i:Interaction.Behaviors>
+        <local:ViewModelDisposeBehavior/>
+    </i:Interaction.Behaviors>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <GroupBox Header="IP/ポートチェック">
+                <StackPanel>
+                    <Label Content="あなたのIPアドレス"/>
+                    <TextBox Text="{Binding MyIPAddress, Converter={local:IPAddressToStringConverter}}" IsReadOnly="True"/>
+                    <Label Content="あなたのポート"/>
+                    <TextBox Text="{Binding MyPort}" IsReadOnly="True"/>
+                    <Button Content="IP アドレスとポートを取得" Command="{Binding GetMyIPAndPortCommand}" Margin="0 15 0 5"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="接続チェック">
+                <StackPanel>
+                    <Label Content="相手のIPアドレス"/>
+                    <TextBox Text="{Binding RemoteIPAddress, Converter={local:IPAddressToStringConverter}}" />
+                    <Label Content="相手のポート"/>
+                    <TextBox Text="{Binding RemotePort}" />
+                    <Button Content="メッセージを送る" Command="{Binding SendCommand}" Margin="0 15 0 5"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+        <GroupBox Grid.Row="1" Header="ログ">
+            <TextBox Text="{Binding LogMessage}" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible"/>
+        </GroupBox>
+    </Grid>
+</UserControl>
